@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLocale } from "@/lib/hooks/useLocale";
-import { SITE, NAV_LINKS } from "@/lib/constants";
+import { SITE, NAV_LINKS, SHOW_SOCIALS } from "@/lib/constants";
 import { SocialLinks } from "./SocialLinks";
 
 export function Footer() {
@@ -34,7 +34,7 @@ export function Footer() {
           ))}
         </nav>
 
-        <SocialLinks />
+        {SHOW_SOCIALS && <SocialLinks />}
       </div>
     </footer>
   );

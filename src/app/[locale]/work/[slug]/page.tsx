@@ -11,6 +11,7 @@ import {
 } from "@/lib/data/projects";
 import { localePath, pickText, categoryLabel } from "@/lib/helpers";
 import { Routs } from "@/lib/enums";
+import { SHOW_WORK_META } from "@/lib/constants";
 
 export function generateStaticParams() {
   return getAllProjects().map((project) => ({ slug: project.slug }));
@@ -63,19 +64,27 @@ export default async function WorkDetailPage({
       </Link>
 
       <header className="mt-6">
-        <p className="text-sm font-medium text-brand">{categoryLabel(t, project.category)}</p>
-        <h1 className="mt-2 font-heading text-4xl font-semibold laptop:text-5xl">{title}</h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-          {pickText(project.description, locale)}
-        </p>
+        {SHOW_WORK_META.detailInfo && (
+          <p className="text-sm font-medium text-brand">{categoryLabel(t, project.category)}</p>
+        )}
+        {SHOW_WORK_META.detailTitle && (
+          <h1 className="mt-2 font-heading text-4xl font-semibold laptop:text-5xl">{title}</h1>
+        )}
+        {SHOW_WORK_META.detailInfo && (
+          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+            {pickText(project.description, locale)}
+          </p>
+        )}
       </header>
 
-      <dl className="mt-8 grid grid-cols-2 gap-4 border-y border-border/60 py-6 tablet:grid-cols-4">
-        {project.role && <Meta label={t.workDetail.role} value={pickText(project.role, locale)} />}
-        <Meta label={t.workDetail.year} value={String(project.year)} />
-        {project.client && <Meta label={t.workDetail.client} value={project.client} />}
-        <Meta label={t.workDetail.category} value={categoryLabel(t, project.category)} />
-      </dl>
+      {SHOW_WORK_META.detailInfo && (
+        <dl className="mt-8 grid grid-cols-2 gap-4 border-y border-border/60 py-6 tablet:grid-cols-4">
+          {project.role && <Meta label={t.workDetail.role} value={pickText(project.role, locale)} />}
+          <Meta label={t.workDetail.year} value={String(project.year)} />
+          {project.client && <Meta label={t.workDetail.client} value={project.client} />}
+          <Meta label={t.workDetail.category} value={categoryLabel(t, project.category)} />
+        </dl>
+      )}
 
       <div className="mt-8 space-y-6">
         {project.cover ? (
@@ -98,7 +107,7 @@ export default async function WorkDetailPage({
         ))}
       </div>
 
-      {(project.tags?.length || project.links?.length) ? (
+      {SHOW_WORK_META.detailInfo && (project.tags?.length || project.links?.length) ? (
         <div className="mt-8 flex flex-wrap items-center gap-2">
           {project.tags?.map((tag) => (
             <span
@@ -131,9 +140,11 @@ export default async function WorkDetailPage({
             <ArrowLeft className="size-4 shrink-0 rtl:-scale-x-100" />
             <span>
               <span className="block text-xs">{t.workDetail.previousProject}</span>
-              <span className="font-heading font-medium text-foreground">
-                {pickText(prev.title, locale)}
-              </span>
+              {SHOW_WORK_META.navProjectName && (
+                <span className="font-heading font-medium text-foreground">
+                  {pickText(prev.title, locale)}
+                </span>
+              )}
             </span>
           </Link>
         ) : (
@@ -146,9 +157,11 @@ export default async function WorkDetailPage({
           >
             <span>
               <span className="block text-xs">{t.workDetail.nextProject}</span>
-              <span className="font-heading font-medium text-foreground">
-                {pickText(next.title, locale)}
-              </span>
+              {SHOW_WORK_META.navProjectName && (
+                <span className="font-heading font-medium text-foreground">
+                  {pickText(next.title, locale)}
+                </span>
+              )}
             </span>
             <ArrowRight className="size-4 shrink-0 rtl:-scale-x-100" />
           </Link>

@@ -6,6 +6,7 @@ export const ar: Dictionary = {
     description: "TALEEN Creative House — معرض أعمال التصميم الجرافيكي لِحنان، في الهوية البصرية وواجهات المستخدم والموشن.",
   },
   nav: {
+    home: "الرئيسية",
     work: "الأعمال",
     about: "نبذة",
     contact: "تواصل",

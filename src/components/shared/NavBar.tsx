@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Menu } from "lucide-react";
-import { NAV_LINKS } from "@/lib/constants";
+import { NAV_LINKS, SHOW_SOCIALS } from "@/lib/constants";
 import { useLocale } from "@/lib/hooks/useLocale";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -46,7 +46,7 @@ export function NavBar() {
 
         <div className="flex items-center gap-1">
           <div className="hidden items-center gap-1 tablet:flex">
-            <SocialLinks />
+            {SHOW_SOCIALS && <SocialLinks />}
             <LocaleToggle />
             <ThemeToggle />
           </div>
@@ -81,9 +81,11 @@ export function NavBar() {
                     </Link>
                   ))}
                 </nav>
-                <div className="mt-2 px-4">
-                  <SocialLinks />
-                </div>
+                {SHOW_SOCIALS && (
+                  <div className="mt-2 px-4">
+                    <SocialLinks />
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
           </div>

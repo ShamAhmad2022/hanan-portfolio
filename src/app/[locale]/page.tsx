@@ -78,7 +78,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* Contact CTA */}
+      {/* Contact CTA — hidden for now (Contact is suppressed sitewide). Uncomment to restore. */}
+      {/*
       <section className="mx-auto max-w-6xl px-4 py-16 tablet:px-6 laptop:py-24">
         <div className="rounded-2xl border border-border/60 bg-secondary/60 p-8 text-center laptop:p-14">
           <h2 className="font-heading text-3xl font-semibold laptop:text-4xl">{t.home.ctaTitle}</h2>
@@ -91,6 +92,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </Link>
         </div>
       </section>
+      */}
     </>
   );
 }

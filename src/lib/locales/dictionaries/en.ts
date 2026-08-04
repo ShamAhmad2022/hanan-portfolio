@@ -5,6 +5,7 @@ export const en = {
       "TALEEN Creative House — the graphic design portfolio of Hanan, across branding, UI, and motion.",
   },
   nav: {
+    home: "Home",
     work: "Work",
     about: "About",
     contact: "Contact",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { WORK_CATEGORIES } from "@/lib/constants";
+import { WORK_CATEGORIES, SHOW_WORK_META } from "@/lib/constants";
 import type { Project } from "@/lib/data/projects";
 import { useLocale } from "@/lib/hooks/useLocale";
 import { categoryLabel } from "@/lib/helpers";
@@ -17,20 +17,22 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <div className="mt-8 flex flex-wrap gap-2">
-        <FilterChip active={active === "all"} onClick={() => setActive("all")}>
-          {t.work.all}
-        </FilterChip>
-        {categories.map((category) => (
-          <FilterChip
-            key={category}
-            active={active === category}
-            onClick={() => setActive(category)}
-          >
-            {categoryLabel(t, category)}
+      {SHOW_WORK_META.filters && (
+        <div className="mt-8 flex flex-wrap gap-2">
+          <FilterChip active={active === "all"} onClick={() => setActive("all")}>
+            {t.work.all}
           </FilterChip>
-        ))}
-      </div>
+          {categories.map((category) => (
+            <FilterChip
+              key={category}
+              active={active === category}
+              onClick={() => setActive(category)}
+            >
+              {categoryLabel(t, category)}
+            </FilterChip>
+          ))}
+        </div>
+      )}
 
       {filtered.length === 0 ? (
         <p className="mt-10 text-muted-foreground">{t.work.empty}</p>

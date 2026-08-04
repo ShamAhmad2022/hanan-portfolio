@@ -5,6 +5,7 @@ import type { Project } from "@/lib/data/projects";
 import { getDictionary } from "@/lib/locales";
 import { localePath, pickText, categoryLabel } from "@/lib/helpers";
 import { Routs } from "@/lib/enums";
+import { SHOW_WORK_META } from "@/lib/constants";
 
 export function ProjectCard({ project, locale }: { project: Project; locale: string }) {
   const t = getDictionary(locale);
@@ -30,21 +31,31 @@ export function ProjectCard({ project, locale }: { project: Project; locale: str
         )}
 
         {/* Dark "glass" scrim with the project name — layered above the image. */}
-        <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/50 via-black/5 to-transparent p-3">
-          <span className="rounded-md border border-white/15 bg-black/30 px-2.5 py-1 font-heading text-sm font-medium text-white shadow-sm backdrop-blur-md">
-            {title}
-          </span>
-        </div>
+        {SHOW_WORK_META.cardImageLabel && (
+          <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/50 via-black/5 to-transparent p-3">
+            <span className="rounded-md border border-white/15 bg-black/30 px-2.5 py-1 font-heading text-sm font-medium text-white shadow-sm backdrop-blur-md">
+              {title}
+            </span>
+          </div>
+        )}
 
         <span className="absolute end-3 top-3 inline-flex size-8 items-center justify-center rounded-full bg-background/90 text-foreground opacity-0 shadow-sm transition-opacity duration-300 group-hover:opacity-100">
           <ArrowUpRight className="size-4" />
         </span>
       </div>
-      <div className="mt-3 flex items-baseline justify-between gap-3">
-        <h3 className="font-heading text-base font-medium">{title}</h3>
-        <span className="shrink-0 text-sm text-muted-foreground">{project.year}</span>
-      </div>
-      <p className="mt-0.5 text-sm text-muted-foreground">{categoryLabel(t, project.category)}</p>
+      {(SHOW_WORK_META.cardTitle || SHOW_WORK_META.cardDate) && (
+        <div className="mt-3 flex items-baseline justify-between gap-3">
+          {SHOW_WORK_META.cardTitle && (
+            <h3 className="font-heading text-base font-medium">{title}</h3>
+          )}
+          {SHOW_WORK_META.cardDate && (
+            <span className="shrink-0 text-sm text-muted-foreground">{project.year}</span>
+          )}
+        </div>
+      )}
+      {SHOW_WORK_META.cardCategory && (
+        <p className="mt-0.5 text-sm text-muted-foreground">{categoryLabel(t, project.category)}</p>
+      )}
     </Link>
   );
 }
