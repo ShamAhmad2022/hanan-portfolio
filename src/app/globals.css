@@ -1,26 +1,171 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+/* Custom responsive breakpoints (add-ons to the defaults) */
+@theme {
+  --breakpoint-mobile: 412px;
+  --breakpoint-tablet: 820px;
+  --breakpoint-laptop: 1240px;
+  --breakpoint-desktop: 1500px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+
+  /* Brand accents (sampled from the reference site's work) */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-2: var(--brand-2);
+  --color-brand-2-foreground: var(--brand-2-foreground);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================================
+   LIGHT — default (warm off-white paper + ink)
+   Palette derived from klairevandesign.com: warm off-white bg,
+   near-black ink, coral + blue brand accents. Grayscale-safe,
+   accessible (solid CTAs use ink). Re-brand from here only.
+   ============================================================ */
+:root {
+  --background: #fbf9f4;          /* warm off-white paper */
+  --foreground: #232321;         /* near-black ink */
+  --card: #ffffff;
+  --card-foreground: #232321;
+  --popover: #ffffff;
+  --popover-foreground: #232321;
+  --primary: #232321;            /* ink — bold CTA */
+  --primary-foreground: #fbf9f4;
+  --secondary: #f0eee1;          /* cream surface */
+  --secondary-foreground: #232321;
+  --muted: #f1efe8;              /* warm light gray fill */
+  --muted-foreground: #6e6a60;   /* warm mid gray */
+  --accent: #efe9dc;             /* subtle warm hover/tint (NOT a brand color) */
+  --accent-foreground: #232321;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #e7e3d8;             /* warm hairline */
+  --input: #e7e3d8;
+  --ring: #c2b4a0;              /* warm focus ring */
+
+  /* Brand accents */
+  --brand: #e98182;              /* coral */
+  --brand-foreground: #232321;
+  --brand-2: #3d66b1;            /* blue */
+  --brand-2-foreground: #fbf9f4;
+
+  --chart-1: #e98182;
+  --chart-2: #3d66b1;
+  --chart-3: #f5b960;
+  --chart-4: #6a87c2;
+  --chart-5: #e6c9a3;
+  --radius: 0.625rem;
+
+  --sidebar: #fbf9f4;
+  --sidebar-foreground: #232321;
+  --sidebar-primary: #232321;
+  --sidebar-primary-foreground: #fbf9f4;
+  --sidebar-accent: #efe9dc;
+  --sidebar-accent-foreground: #232321;
+  --sidebar-border: #e7e3d8;
+  --sidebar-ring: #c2b4a0;
+}
+
+/* ============================================================
+   DARK — inverted warm (near-black paper + off-white ink)
+   ============================================================ */
+.dark {
+  --background: #1a1917;
+  --foreground: #f3f0e9;
+  --card: #232220;
+  --card-foreground: #f3f0e9;
+  --popover: #232220;
+  --popover-foreground: #f3f0e9;
+  --primary: #f3f0e9;
+  --primary-foreground: #1a1917;
+  --secondary: #2e2c28;
+  --secondary-foreground: #f3f0e9;
+  --muted: #2e2c28;
+  --muted-foreground: #b0a99b;
+  --accent: #33302b;
+  --accent-foreground: #f3f0e9;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: #6e6a60;
+
+  --brand: #e98182;
+  --brand-foreground: #1a1917;
+  --brand-2: #8aa6de;
+  --brand-2-foreground: #1a1917;
+
+  --chart-1: #e98182;
+  --chart-2: #8aa6de;
+  --chart-3: #f5b960;
+  --chart-4: #6a87c2;
+  --chart-5: #e6c9a3;
+
+  --sidebar: #232220;
+  --sidebar-foreground: #f3f0e9;
+  --sidebar-primary: #f3f0e9;
+  --sidebar-primary-foreground: #1a1917;
+  --sidebar-accent: #33302b;
+  --sidebar-accent-foreground: #f3f0e9;
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: #6e6a60;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
 }
