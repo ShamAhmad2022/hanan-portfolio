@@ -109,7 +109,7 @@ const BASE_PROJECTS: BaseProject[] = [
  * from this array. To swap in real content later, replace the pool text per
  * `sample-<N>` entry — the structure doesn't need to change.
  */
-export const projects: Project[] = Array.from({ length: 30 }, (_, i) => {
+export const projects: Project[] = Array.from({ length: 31 }, (_, i) => {
   const n = i + 1;
   const base = BASE_PROJECTS[i % BASE_PROJECTS.length];
   return {

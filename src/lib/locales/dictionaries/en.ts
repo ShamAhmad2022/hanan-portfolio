@@ -21,9 +21,26 @@ export const en = {
     retry: "Try again",
   },
   home: {
-    greeting: "Hi! I'm Hanan.",
-    intro:
-      "A Fine Arts graduate of Damascus University and a fashion designer, I blend artistic craft with advertising design, fashion, and embroidery — creating branding and visual work designed to captivate.",
+    // greeting: "Hi! I'm Hanan.",
+    greeting: "About TALEEN Creative House",
+    // intro:
+    //   "A Fine Arts graduate of Damascus University and a fashion designer, I blend artistic craft with advertising design, fashion, and embroidery — creating branding and visual work designed to captivate.",
+    introParagraphs: [
+      "TALEEN Creative House is a luxury creative studio founded on the belief that art, technology, and imagination can transform ideas into unforgettable visual experiences.",
+      "With a background rooted in Fine Arts, Fashion Design, Branding, and AI-powered creative solutions, TALEEN creates elegant visual identities, inspiring digital content, and artistic concepts that connect beauty with purpose.",
+      "Founded by Engineer Hanan, a Fine Arts graduate from Damascus University, the studio combines artistic vision, refined aesthetics, and modern creative technologies to deliver unique solutions for brands, businesses, and creative projects.",
+      "Our approach is based on understanding the story behind every brand and transforming it into a distinctive visual language through:",
+    ],
+    introSkills: [
+      "Luxury Brand Identity Design",
+      "AI Visual Art & Creative Concepts",
+      "Social Media Design & Advertising Content",
+      "Motion Graphics & Digital Experiences",
+      "Fashion Design & Artistic Direction",
+      "Creative Solutions for Events, Exhibitions, and Businesses",
+    ],
+    lastIntroParagraphs:
+      "At TALEEN Creative House, we believe that every idea deserves a beautiful identity and every brand has a story waiting to be told.",
     services: ["Luxury Branding", "AI Visual Art", "Creative Design"],
     selectedWork: "Selected work",
     viewAll: "View all work",
@@ -55,11 +72,31 @@ export const en = {
   },
   about: {
     title: "About",
-    heading: "Hey! I'm Hanan.",
-    bio: [
-      "I'm Hanan, an engineer holding a Bachelor's degree from the Faculty of Fine Arts at Damascus University. Driven by my passion for art and a desire to enrich my experience and refine my skills, I continued my studies — earning a diploma in Professional Advertising Design at the Sham Institute for Information Technology, then graduating with distinction as a fashion designer and trainer from the Model Center Institute, where I merged the discipline of fine arts with the craft of fashion.",
-      "I've since deepened my practice through specialized training on the Tajima embroidery software to master embroidery patterns and quality, and hands-on mentorship from a French-trained fashion designer in design, tailoring, and efficient fabric layout that keeps waste to a minimum. Alongside my creative work, I've trained in project and enterprise management at the SIA Foundation and in building viable economic feasibility studies at the General Organization for Employment and Project Development.",
+    // heading: "Hey! I'm Hanan.",
+    // bio: [
+    //   "I'm Hanan, an engineer holding a Bachelor's degree from the Faculty of Fine Arts at Damascus University. Driven by my passion for art and a desire to enrich my experience and refine my skills, I continued my studies — earning a diploma in Professional Advertising Design at the Sham Institute for Information Technology, then graduating with distinction as a fashion designer and trainer from the Model Center Institute, where I merged the discipline of fine arts with the craft of fashion.",
+    //   "I've since deepened my practice through specialized training on the Tajima embroidery software to master embroidery patterns and quality, and hands-on mentorship from a French-trained fashion designer in design, tailoring, and efficient fabric layout that keeps waste to a minimum. Alongside my creative work, I've trained in project and enterprise management at the SIA Foundation and in building viable economic feasibility studies at the General Organization for Employment and Project Development.",
+    // ],
+    // greeting: "Hi! I'm Hanan.",
+    greeting: "About TALEEN Creative House",
+    // intro:
+    //   "A Fine Arts graduate of Damascus University and a fashion designer, I blend artistic craft with advertising design, fashion, and embroidery — creating branding and visual work designed to captivate.",
+    introParagraphs: [
+      "TALEEN Creative House is a luxury creative studio founded on the belief that art, technology, and imagination can transform ideas into unforgettable visual experiences.",
+      "With a background rooted in Fine Arts, Fashion Design, Branding, and AI-powered creative solutions, TALEEN creates elegant visual identities, inspiring digital content, and artistic concepts that connect beauty with purpose.",
+      "Founded by Engineer Hanan, a Fine Arts graduate from Damascus University, the studio combines artistic vision, refined aesthetics, and modern creative technologies to deliver unique solutions for brands, businesses, and creative projects.",
+      "Our approach is based on understanding the story behind every brand and transforming it into a distinctive visual language through:",
     ],
+    introSkills: [
+      "Luxury Brand Identity Design",
+      "AI Visual Art & Creative Concepts",
+      "Social Media Design & Advertising Content",
+      "Motion Graphics & Digital Experiences",
+      "Fashion Design & Artistic Direction",
+      "Creative Solutions for Events, Exhibitions, and Businesses",
+    ],
+    lastIntroParagraphs:
+      "At TALEEN Creative House, we believe that every idea deserves a beautiful identity and every brand has a story waiting to be told.",
   },
   contact: {
     title: "Contact",
