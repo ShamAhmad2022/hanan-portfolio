@@ -64,20 +64,20 @@ export default async function WorkDetailPage({
       </Link>
 
       <header className="mt-6">
-        {SHOW_WORK_META.detailInfo && (
+        {SHOW_WORK_META.detailCategory && (
           <p className="text-sm font-medium text-brand">{categoryLabel(t, project.category)}</p>
         )}
         {SHOW_WORK_META.detailTitle && (
           <h1 className="mt-2 font-heading text-4xl font-semibold laptop:text-5xl">{title}</h1>
         )}
-        {SHOW_WORK_META.detailInfo && (
+        {SHOW_WORK_META.detailDescription && (
           <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
             {pickText(project.description, locale)}
           </p>
         )}
       </header>
 
-      {SHOW_WORK_META.detailInfo && (
+      {SHOW_WORK_META.detailSpecs && (
         <dl className="mt-8 grid grid-cols-2 gap-4 border-y border-border/60 py-6 tablet:grid-cols-4">
           {project.role && <Meta label={t.workDetail.role} value={pickText(project.role, locale)} />}
           <Meta label={t.workDetail.year} value={String(project.year)} />
@@ -107,7 +107,7 @@ export default async function WorkDetailPage({
         ))}
       </div>
 
-      {SHOW_WORK_META.detailInfo && (project.tags?.length || project.links?.length) ? (
+      {SHOW_WORK_META.detailTags && (project.tags?.length || project.links?.length) ? (
         <div className="mt-8 flex flex-wrap items-center gap-2">
           {project.tags?.map((tag) => (
             <span

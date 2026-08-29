@@ -37,28 +37,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Intro */}
       <section className="mx-auto max-w-6xl px-4 pt-6 pb-12 tablet:px-6 laptop:pb-16">
-        <h2 className="font-heading text-3xl font-semibold tracking-tight text-balance laptop:text-4xl">
-          {t.home.greeting}
-        </h2>
 
-        {<div className="mt-4 text-lg text-muted-foreground text-pretty laptop:text-xl">{
-          t.home.introParagraphs.map((paragraph, i) => (
-            <p key={i} className="mt-4 text-lg text-muted-foreground text-pretty laptop:text-xl">
-              {paragraph}
-            </p>
-          ))
-        }</div>}
+        <p className="mt-4 text-lg text-muted-foreground text-pretty laptop:text-xl">
+          {t.home.firstIntroParagraphs}
+        </p>
 
-        <ul className="mt-6 grid grid-cols-1 gap-2 text-muted-foreground tablet:grid-cols-2 laptop:mt-8 laptop:gap-3">
-          {t.home.introSkills.map((skill, i) => (
-            <li key={i} className="flex items-center gap-2">
-              <span className="text-brand">•</span>
-              <span>{skill}</span>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-6 text-lg text-muted-foreground text-pretty laptop:mt-8 laptop:text-xl">
+        <p className="mt-4 text-lg text-muted-foreground text-pretty laptop:text-xl">
           {t.home.lastIntroParagraphs}
         </p>
 

@@ -1,10 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { WORK_CATEGORIES, SHOW_WORK_META } from "@/lib/constants";
+import Image from "next/image";
+import {
+  WORK_CATEGORIES,
+  SHOW_WORK_META,
+  ADDITIONAL_GALLERIES,
+  type WorkCategory,
+} from "@/lib/constants";
 import type { Project } from "@/lib/data/projects";
 import { useLocale } from "@/lib/hooks/useLocale";
-import { categoryLabel } from "@/lib/helpers";
+import { categoryLabel, categoryDescription, additionalGalleryTitle } from "@/lib/helpers";
 import { cn } from "@/lib/utils";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 
@@ -14,6 +20,9 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
 
   const categories = WORK_CATEGORIES.filter((c) => projects.some((p) => p.category === c));
   const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
+  const description = categoryDescription(t, active);
+  const gallery = active === "all" ? undefined : ADDITIONAL_GALLERIES[active as WorkCategory];
+  const galleryTitle = additionalGalleryTitle(t, active);
 
   return (
     <>
@@ -34,6 +43,15 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
         </div>
       )}
 
+      {SHOW_WORK_META.filters && description ? (
+        <p
+          aria-live="polite"
+          className="mt-6 max-w-auto whitespace-pre-line text-muted-foreground"
+        >
+          {description}
+        </p>
+      ) : null}
+
       {filtered.length === 0 ? (
         <p className="mt-10 text-muted-foreground">{t.work.empty}</p>
       ) : (
@@ -43,6 +61,30 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
           ))}
         </div>
       )}
+
+      {gallery?.enabled && gallery.images.length > 0 ? (
+        <section className="mt-16">
+          {galleryTitle ? (
+            <h2 className="font-heading text-2xl font-semibold laptop:text-3xl">{galleryTitle}</h2>
+          ) : null}
+          <div className="mt-6 space-y-6">
+            {gallery.images.map((src, i) => (
+              <div
+                key={src}
+                className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-border/60 bg-secondary"
+              >
+                <Image
+                  src={src}
+                  alt={`${categoryLabel(t, active)} — ${i + 1}`}
+                  fill
+                  sizes="(max-width: 1240px) 100vw, 1152px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </>
   );
 }

@@ -32,14 +32,16 @@ export const NAV_LINKS = [
 ] as const;
 
 /** Work filter categories (must match Project.category values). */
-export const WORK_CATEGORIES = ["Branding", "UI", "Motion", "Illustration"] as const;
+export const WORK_CATEGORIES = ["Fashion", "Graphics", "Photography", "Events"] as const;
 export type WorkCategory = (typeof WORK_CATEGORIES)[number];
 
 /**
- * Temporary visibility toggles. The sample items in `lib/data/projects.ts` use
- * placeholder metadata until Hanan supplies the real content per piece, so we
- * hide (not remove) that dummy metadata for now. Flip a flag back to `true`
- * once its real data exists — the markup is kept, just gated by these flags.
+ * Visibility toggles for per-project metadata — all on. The markup lives in
+ * `ProjectCard`, the work list filter, and the case-study page; each block is
+ * gated by one of these flags rather than being removed. Note the copy in
+ * `lib/data/projects.ts` is still placeholder (a small pool cycled across the
+ * samples), so titles/clients/tags repeat and year/category are generated.
+ * Flip a flag back to `false` to hide that field again until real data exists.
  */
 export const SHOW_WORK_META = {
   /** The glass name-label pill layered on top of each card's image. */
@@ -51,11 +53,32 @@ export const SHOW_WORK_META = {
   /** Category label under each card in the work grid. */
   cardCategory: false,
   /** Category filter pills on the work list page. */
-  filters: false,
-  /** Case-study text info: category label, description, specs block, tags/links. */
-  detailInfo: false,
+  filters: true,
   /** Work title (name) heading on the case-study page. */
   detailTitle: false,
+  /** Category label above the title on the case-study page. */
+  detailCategory: true,
+  /** Description paragraph between the title and the images. */
+  detailDescription: false,
+  /** Role/year/client/category specs table, between the title and the images. */
+  detailSpecs: false,
+  /** Tag + link pills below the case-study image gallery. */
+  detailTags: false,
   /** Prev/next project names in the case-study footer nav (labels + arrows stay). */
   navProjectName: false,
 } as const;
+
+/**
+ * Extra full-width gallery shown under the work grid when its category is the
+ * active filter. `enabled` is the per-category switch — set it to `false` to
+ * hide a gallery without losing its configured images. Add a category block
+ * here to give it a gallery; omit one and no section renders for it.
+ */
+export const ADDITIONAL_GALLERIES: Partial<
+  Record<WorkCategory, { enabled: boolean; images: readonly string[] }>
+> = {
+  Fashion: {
+    enabled: true,
+    images: ["/work-samples/additional1.jpeg", "/work-samples/additional2.jpeg"],
+  },
+};

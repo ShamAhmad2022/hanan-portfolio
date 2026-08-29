@@ -17,3 +17,16 @@ export function categoryLabel(t: Dictionary, category: string): string {
   const labels = t.work.categoryLabels as Record<string, string>;
   return labels[category] ?? category;
 }
+
+/** Localized blurb for a project category; "all" gets the overview line. */
+export function categoryDescription(t: Dictionary, category: string): string {
+  if (category === "all") return t.work.allDescription;
+  const descriptions = t.work.categoryDescriptions as Record<string, string>;
+  return descriptions[category] ?? "";
+}
+
+/** Localized heading for a category's additional gallery ("" when it has none). */
+export function additionalGalleryTitle(t: Dictionary, category: string): string {
+  const titles = t.work.additionalTitles as Record<string, string | undefined>;
+  return titles[category] ?? "";
+}

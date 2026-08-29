@@ -1,4 +1,4 @@
-import { WORK_CATEGORIES } from "@/lib/constants";
+import { WORK_CATEGORIES, type WorkCategory } from "@/lib/constants";
 
 export type LocalizedText = { en: string; ar: string };
 
@@ -101,23 +101,57 @@ const BASE_PROJECTS: BaseProject[] = [
 ];
 
 /**
- * The portfolio pieces — currently 30 sample cards, one per image in
- * `public/work-samples/`. Each card uses a sample image as its `cover`; the
- * surrounding text is dummy (cycled from BASE_PROJECTS) until real per-project
- * content exists. `category` cycles through WORK_CATEGORIES so the /work filter
- * stays meaningful. Everything (grid, detail page, sitemap, static params) reads
- * from this array. To swap in real content later, replace the pool text per
- * `sample-<N>` entry — the structure doesn't need to change.
+ * Confirmed category per sample number. These are real classifications and take
+ * precedence over the placeholder round-robin in the generator below — add an
+ * entry here as each remaining piece is identified.
  */
-export const projects: Project[] = Array.from({ length: 31 }, (_, i) => {
+const CATEGORY_BY_SAMPLE: Partial<Record<number, WorkCategory>> = {
+  31: "Fashion",
+  32: "Fashion",
+  33: "Fashion",
+  34: "Fashion",
+  35: "Fashion",
+  36: "Fashion",
+  37: "Fashion",
+  38: "Fashion",
+};
+
+/**
+ * Categories the placeholder round-robin may still hand out. "Fashion" is
+ * deliberately excluded: it is a confirmed classification, so it is only ever
+ * applied via CATEGORY_BY_SAMPLE and never guessed from a sample's position.
+ */
+const PLACEHOLDER_CATEGORIES = WORK_CATEGORIES.filter((c) => c !== "Fashion");
+
+/** One card per image in `public/work-samples/` — bump this when images are added. */
+const SAMPLE_COUNT = 38;
+
+/**
+ * How many pieces the home page's "Selected work" grid shows. Taken from the
+ * END of the list so the newest samples (currently the fashion work) lead the
+ * landing page; the grid is 3-wide on laptop, so multiples of 3 fill it evenly.
+ */
+const FEATURED_COUNT = 6;
+
+/**
+ * The portfolio pieces — one card per image in `public/work-samples/`. Each card
+ * uses a sample image as its `cover`; the surrounding text is dummy (cycled from
+ * BASE_PROJECTS) until real per-project content exists. `category` comes from
+ * CATEGORY_BY_SAMPLE where known, otherwise it cycles through
+ * PLACEHOLDER_CATEGORIES so the /work filter stays populated. Everything (grid,
+ * detail page, sitemap, static params) reads from this array. To swap in real
+ * content later, replace the pool text per `sample-<N>` entry — the structure
+ * doesn't need to change.
+ */
+export const projects: Project[] = Array.from({ length: SAMPLE_COUNT }, (_, i) => {
   const n = i + 1;
   const base = BASE_PROJECTS[i % BASE_PROJECTS.length];
   return {
     ...base,
     slug: `sample-${n}`,
-    category: WORK_CATEGORIES[i % WORK_CATEGORIES.length],
+    category: CATEGORY_BY_SAMPLE[n] ?? PLACEHOLDER_CATEGORIES[i % PLACEHOLDER_CATEGORIES.length],
     year: 2025 - (i % 4),
-    featured: i < 3, // first three feed the home "Selected work" grid
+    featured: i >= SAMPLE_COUNT - FEATURED_COUNT, // the last N feed the home grid
     cover: `/work-samples/sample${n}.jpeg`,
     images: [],
   };
@@ -129,7 +163,7 @@ export function getAllProjects(): Project[] {
 
 export function getFeaturedProjects(): Project[] {
   const featured = projects.filter((p) => p.featured);
-  return featured.length > 0 ? featured : projects.slice(0, 3);
+  return featured.length > 0 ? featured : projects.slice(-FEATURED_COUNT);
 }
 
 export function getProjectBySlug(slug: string): Project | undefined {

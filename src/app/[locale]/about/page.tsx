@@ -34,7 +34,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       </div> */}
 
       <h2 className="font-heading text-3xl font-semibold tracking-tight text-balance laptop:text-4xl">
-        {t.home.greeting}
+        {t.about.greeting}
       </h2>
 
       {<div className="mt-4 text-lg text-muted-foreground text-pretty laptop:text-xl">{
