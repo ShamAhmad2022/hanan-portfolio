@@ -4,23 +4,51 @@ import { useState } from "react";
 import Image from "next/image";
 import {
   WORK_CATEGORIES,
+  WORK_SUBCATEGORIES,
   SHOW_WORK_META,
   ADDITIONAL_GALLERIES,
   type WorkCategory,
 } from "@/lib/constants";
 import type { Project } from "@/lib/data/projects";
 import { useLocale } from "@/lib/hooks/useLocale";
-import { categoryLabel, categoryDescription, additionalGalleryTitle } from "@/lib/helpers";
+import {
+  categoryLabel,
+  categoryDescription,
+  subcategoryLabel,
+  subcategoryDescription,
+  additionalGalleryTitle,
+} from "@/lib/helpers";
 import { cn } from "@/lib/utils";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 
 export function WorkFilter({ projects }: { projects: Project[] }) {
   const { t, locale } = useLocale();
   const [active, setActive] = useState<string>("all");
+  const [activeSub, setActiveSub] = useState<string | null>(null);
+
+  /** Changing the main tag always clears the sub-tag. */
+  const selectCategory = (category: string) => {
+    setActive(category);
+    setActiveSub(null);
+  };
 
   const categories = WORK_CATEGORIES.filter((c) => projects.some((p) => p.category === c));
-  const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
+
+  // Empty for "all" and for any category without sub-tags, so the row doesn't
+  // render. Only offers sub-tags that actually have pieces, like `categories`.
+  const subcategories = (WORK_SUBCATEGORIES[active as WorkCategory] ?? []).filter((s) =>
+    projects.some((p) => p.category === active && p.subcategory === s),
+  );
+  // A sub-tag can only ever apply to the category that declares it, so a stale
+  // selection can't narrow another category's grid.
+  const effectiveSub = activeSub && subcategories.includes(activeSub) ? activeSub : null;
+
+  const byCategory = active === "all" ? projects : projects.filter((p) => p.category === active);
+  const filtered = effectiveSub
+    ? byCategory.filter((p) => p.subcategory === effectiveSub)
+    : byCategory;
   const description = categoryDescription(t, active);
+  const subDescription = effectiveSub ? subcategoryDescription(t, effectiveSub) : "";
   const gallery = active === "all" ? undefined : ADDITIONAL_GALLERIES[active as WorkCategory];
   const galleryTitle = additionalGalleryTitle(t, active);
 
@@ -28,14 +56,14 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
     <>
       {SHOW_WORK_META.filters && (
         <div className="mt-8 flex flex-wrap gap-2">
-          <FilterChip active={active === "all"} onClick={() => setActive("all")}>
+          <FilterChip active={active === "all"} onClick={() => selectCategory("all")}>
             {t.work.all}
           </FilterChip>
           {categories.map((category) => (
             <FilterChip
               key={category}
               active={active === category}
-              onClick={() => setActive(category)}
+              onClick={() => selectCategory(category)}
             >
               {categoryLabel(t, category)}
             </FilterChip>
@@ -49,6 +77,30 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
           className="mt-6 max-w-auto whitespace-pre-line text-muted-foreground"
         >
           {description}
+        </p>
+      ) : null}
+
+      {SHOW_WORK_META.filters && subcategories.length > 0 ? (
+        <div className="mt-8 flex flex-wrap gap-2 border-s-2 border-border ps-4">
+          <FilterChip variant="sub" active={effectiveSub === null} onClick={() => setActiveSub(null)}>
+            {t.work.all}
+          </FilterChip>
+          {subcategories.map((sub) => (
+            <FilterChip
+              key={sub}
+              variant="sub"
+              active={effectiveSub === sub}
+              onClick={() => setActiveSub(sub)}
+            >
+              {subcategoryLabel(t, sub)}
+            </FilterChip>
+          ))}
+        </div>
+      ) : null}
+
+      {SHOW_WORK_META.filters && subDescription ? (
+        <p aria-live="polite" className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          {subDescription}
         </p>
       ) : null}
 
@@ -89,23 +141,31 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
   );
 }
 
+/** `variant="sub"` renders the smaller, brand-tinted chip used by the sub-tag row. */
 function FilterChip({
   active,
   onClick,
+  variant = "main",
   children,
 }: {
   active: boolean;
   onClick: () => void;
+  variant?: "main" | "sub";
   children: React.ReactNode;
 }) {
+  const sub = variant === "sub";
   return (
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
-        "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+        "rounded-full border font-medium transition-colors",
+        sub ? "px-3 py-1 text-xs" : "px-4 py-1.5 text-sm",
         active
-          ? "border-foreground bg-foreground text-background"
+          ? sub
+            ? "border-brand bg-brand text-brand-foreground"
+            : "border-foreground bg-foreground text-background"
           : "border-border text-muted-foreground hover:border-foreground/40 hover:text-foreground",
       )}
     >

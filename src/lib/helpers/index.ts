@@ -25,6 +25,18 @@ export function categoryDescription(t: Dictionary, category: string): string {
   return descriptions[category] ?? "";
 }
 
+/** Localized label for a category's sub-tag (falls back to the raw key). */
+export function subcategoryLabel(t: Dictionary, subcategory: string): string {
+  const labels = t.work.subcategoryLabels as Record<string, string | undefined>;
+  return labels[subcategory] ?? subcategory;
+}
+
+/** Localized blurb for a sub-tag ("" when it has none). */
+export function subcategoryDescription(t: Dictionary, subcategory: string): string {
+  const descriptions = t.work.subcategoryDescriptions as Record<string, string | undefined>;
+  return descriptions[subcategory] ?? "";
+}
+
 /** Localized heading for a category's additional gallery ("" when it has none). */
 export function additionalGalleryTitle(t: Dictionary, category: string): string {
   const titles = t.work.additionalTitles as Record<string, string | undefined>;

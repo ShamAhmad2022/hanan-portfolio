@@ -6,6 +6,12 @@ export interface Project {
   slug: string;
   title: LocalizedText;
   category: string; // one of WORK_CATEGORIES
+  /**
+   * Optional second-level tag. Only meaningful when the category declares
+   * sub-tags in WORK_SUBCATEGORIES; a piece without one shows only under that
+   * category's "All".
+   */
+  subcategory?: string;
   year: number;
   featured?: boolean;
   /** Placeholder tint used until a real cover image is added. */
@@ -26,7 +32,7 @@ export interface Project {
 /**
  * Dummy copy reused across the sample cards until real per-project content
  * exists. Each field is bilingual; the generator below cycles this pool across
- * the 30 uploaded images in `public/work-samples/`.
+ * the uploaded images in `public/work-samples/`.
  */
 type BaseProject = Pick<
   Project,
@@ -100,20 +106,31 @@ const BASE_PROJECTS: BaseProject[] = [
   },
 ];
 
+/** Assigns one value to an inclusive range of sample numbers. */
+function sampleRange<T>(from: number, to: number, value: T): Partial<Record<number, T>> {
+  return Object.fromEntries(Array.from({ length: to - from + 1 }, (_, i) => [from + i, value]));
+}
+
 /**
  * Confirmed category per sample number. These are real classifications and take
  * precedence over the placeholder round-robin in the generator below — add an
  * entry here as each remaining piece is identified.
  */
 const CATEGORY_BY_SAMPLE: Partial<Record<number, WorkCategory>> = {
-  31: "Fashion",
-  32: "Fashion",
-  33: "Fashion",
-  34: "Fashion",
-  35: "Fashion",
-  36: "Fashion",
-  37: "Fashion",
-  38: "Fashion",
+  ...sampleRange(31, 87, "Fashion"),
+};
+
+/**
+ * Confirmed sub-tag per sample number — the second-level filter on /work. Keys
+ * must match the ones its category declares in WORK_SUBCATEGORIES. Samples left
+ * out (31–38) stay under the category with no sub-tag, so they show only when
+ * the sub-filter is "All".
+ */
+const SUBCATEGORY_BY_SAMPLE: Partial<Record<number, string>> = {
+  ...sampleRange(39, 42, "futoon-factory"),
+  ...sampleRange(43, 51, "winter-collection"),
+  ...sampleRange(52, 70, "nasab"),
+  ...sampleRange(71, 87, "own-collection"),
 };
 
 /**
@@ -124,7 +141,7 @@ const CATEGORY_BY_SAMPLE: Partial<Record<number, WorkCategory>> = {
 const PLACEHOLDER_CATEGORIES = WORK_CATEGORIES.filter((c) => c !== "Fashion");
 
 /** One card per image in `public/work-samples/` — bump this when images are added. */
-const SAMPLE_COUNT = 38;
+const SAMPLE_COUNT = 87;
 
 /**
  * How many pieces the home page's "Selected work" grid shows. Taken from the
@@ -150,6 +167,7 @@ export const projects: Project[] = Array.from({ length: SAMPLE_COUNT }, (_, i) =
     ...base,
     slug: `sample-${n}`,
     category: CATEGORY_BY_SAMPLE[n] ?? PLACEHOLDER_CATEGORIES[i % PLACEHOLDER_CATEGORIES.length],
+    subcategory: SUBCATEGORY_BY_SAMPLE[n],
     year: 2025 - (i % 4),
     featured: i >= SAMPLE_COUNT - FEATURED_COUNT, // the last N feed the home grid
     cover: `/work-samples/sample${n}.jpeg`,

@@ -36,6 +36,17 @@ export const WORK_CATEGORIES = ["Fashion", "Graphics", "Photography", "Events"] 
 export type WorkCategory = (typeof WORK_CATEGORIES)[number];
 
 /**
+ * Sub-tags shown as a second filter row, per main category. Only categories
+ * listed here get a sub-row; every other category keeps the single row. Values
+ * are stable keys — the visible label and blurb live in the dictionaries under
+ * `work.subcategoryLabels` / `work.subcategoryDescriptions`, and the per-sample
+ * assignment lives in `lib/data/projects.ts`.
+ */
+export const WORK_SUBCATEGORIES: Partial<Record<WorkCategory, readonly string[]>> = {
+  Fashion: ["futoon-factory", "winter-collection", "nasab", "own-collection"],
+};
+
+/**
  * Visibility toggles for per-project metadata — all on. The markup lives in
  * `ProjectCard`, the work list filter, and the case-study page; each block is
  * gated by one of these flags rather than being removed. Note the copy in

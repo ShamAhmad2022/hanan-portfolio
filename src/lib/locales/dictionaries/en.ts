@@ -44,6 +44,21 @@ export const en = {
       Photography: "Photography",
       Events: "Events, Exhibitions & Occasions",
     },
+    /** Second-level filter chips — keys come from WORK_SUBCATEGORIES. */
+    subcategoryLabels: {
+      "futoon-factory": "Futoon factory",
+      "winter-collection": "Winter Collection",
+      nasab: "Nasab project",
+      "own-collection": "My own project",
+    },
+    /** Blurb shown under the sub-filter row while that sub-tag is active. */
+    subcategoryDescriptions: {
+      "futoon-factory": "Designs produced for the Futoon Lingerie & Sportswear factory",
+      "winter-collection": "Children's model designs — produced and brought to market",
+      nasab: "Abaya and jalabiya design, plus embroidery artwork for automated machines",
+      "own-collection":
+        "My collection designs for lingerie, pajamas, and loungewear — sold and produced",
+    },
     /** Placeholder blurbs shown under the filter chips — replace with Hanan's real copy. */
     categoryDescriptions: {
       Fashion: `Fashion Design, Production & the Arts — and Training in Them

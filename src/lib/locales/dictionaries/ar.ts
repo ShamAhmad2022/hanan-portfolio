@@ -46,6 +46,20 @@ export const ar: Dictionary = {
       Photography: "التصوير الفوتوغرافي",
       Events: "تصاميم وتجهيز الحفلات والمعارض والمناسبات",
     },
+    /** Second-level filter chips — keys come from WORK_SUBCATEGORIES. */
+    subcategoryLabels: {
+      "futoon-factory": "مصنع فتون",
+      "winter-collection": "كلكشن الشتاء",
+      nasab: "مشروع نسب",
+      "own-collection": "مشروعي الخاص",
+    },
+    /** Blurb shown under the sub-filter row while that sub-tag is active. */
+    subcategoryDescriptions: {
+      "futoon-factory": "تصاميم منفذة لمصنع لانجوري فتون وسبورت وير",
+      "winter-collection": "تصاميم موديلات اطفال تم تنفيذها وتسويقها",
+      nasab: "مشروع نسب لتصميم العبايات والجلابيات ورسومات التطريز للمكن الآلي",
+      "own-collection": "تصاميمي كلكشن لانجوري والبجامات وملابس البيت تم بيعها وتنفيذها",
+    },
     /** Placeholder blurbs shown under the filter chips — replace with Hanan's real copy. */
     categoryDescriptions: {
       Fashion: `تصميم وصناعة الأزياء والفنون - والتدريب عليها
