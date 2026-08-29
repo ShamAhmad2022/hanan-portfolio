@@ -81,7 +81,7 @@ export function WorkFilter({ projects }: { projects: Project[] }) {
       ) : null}
 
       {SHOW_WORK_META.filters && subcategories.length > 0 ? (
-        <div className="mt-8 flex flex-wrap gap-2 border-s-2 border-border ps-4">
+        <div className="mt-12 flex flex-wrap gap-2 border-s-2 border-border ps-4">
           <FilterChip variant="sub" active={effectiveSub === null} onClick={() => setActiveSub(null)}>
             {t.work.all}
           </FilterChip>
