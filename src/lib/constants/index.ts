@@ -6,19 +6,30 @@ export const SITE = {
   /** The person behind the studio — About page + first-person copy. */
   owner: "Hanan",
   role: "Graphic Designer",
-  email: "shamahmadaljalam@gmail.com", // TODO: replace with the real address
+  email: "taleen.creativehouse@gmail.com",
+  /** WhatsApp number, display form; the wa.me href is derived by stripping non-digits. */
+  whatsapp: "+20 10 35508863",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 };
 
-/** Update these hrefs with the real profile URLs. */
+/**
+ * Contact links shown in the header, footer and contact page. Only WhatsApp +
+ * email for now — re-add the profile entries (with real URLs) to bring the
+ * Instagram / LinkedIn icons back.
+ */
 export const SOCIALS = [
-  { key: "instagram", label: "Instagram", href: "https://instagram.com/" },
-  { key: "linkedin", label: "LinkedIn", href: "https://linkedin.com/" },
-  { key: "email", label: "Email", href: `mailto:${SITE.email}` },
+  {
+    key: "whatsapp",
+    label: "WhatsApp",
+    href: `https://wa.me/${SITE.whatsapp.replace(/[^0-9]/g, "")}`,
+  },
+  { key: "email", label: SITE.email, href: `mailto:${SITE.email}` },
+  // { key: "instagram", label: "Instagram", href: "https://instagram.com/" },
+  // { key: "linkedin", label: "LinkedIn", href: "https://linkedin.com/" },
 ] as const;
 
-/** Show the social links in the header + footer. Hidden for now. */
-export const SHOW_SOCIALS = false;
+/** Show the contact links in the header + footer. */
+export const SHOW_SOCIALS = true;
 
 /**
  * Primary nav, shared by the header and footer. `key` maps into t.nav.
